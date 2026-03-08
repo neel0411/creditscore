@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Credit Score Analytics Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:25px;
+margin-top:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:20px;
+margin-top:20px;
+}
+
+.stat-box{
+background:#2c7be5;
+color:white;
+padding:20px;
+border-radius:8px;
+font-size:18px;
+text-align:center;
+}
+
+img{
+width:100%;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Credit Score Analytics Dashboard</h1>
+
+<div class="stats">
+
+<div class="stat-box">
+Accuracy<br>
+<b>{{ accuracy }}%</b>
+</div>
+
+<div class="stat-box">
+Model<br>
+<b>Logistic Regression</b>
+</div>
+
+<div class="stat-box">
+Prediction Classes<br>
+<b>Good / Standard / Poor</b>
+</div>
+
+</div>
+
+<br>
+
+<h2>Confusion Matrix</h2>
+
+<div class="card">
+<p>{{ cm }}</p>
+</div>
+
+<h2>Data Visualizations</h2>
+
+<div class="dashboard-grid">
+
+<div class="card">
+<h3>Credit Score Distribution</h3>
+<img src="/static/chart1.png">
+</div>
+
+<div class="card">
+<h3>Income vs Credit Score</h3>
+<img src="/static/chart2.png">
+</div>
+
+<div class="card">
+<h3>Loan Distribution</h3>
+<img src="/static/chart3.png">
+</div>
+
+<div class="card">
+<h3>Outstanding Debt Distribution</h3>
+<img src="/static/chart4.png">
+</div>
+
+<div class="card">
+<h3>Credit Utilization Ratio</h3>
+<img src="/static/chart5.png">
+</div>
+
+<div class="card">
+<h3>Credit Score Pie Chart</h3>
+<img src="/static/chart6.png">
+</div>
+
+<div class="card">
+<h3>Feature Correlation Heatmap</h3>
+<img src="/static/chart7.png">
+</div>
+
+</div>
+
+<br><br>
+
+<a href="/">⬅ Back to Prediction</a>
+
+</div>
+
+</body>
+
+</html>
