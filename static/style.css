@@ -83,3 +83,16 @@ img{
 width:100%;
 border-radius:8px;
 }
+
+/* NEW CLASSES - Sirf agar already exist karte hain toh */
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:20px;
+}
+
+.input-box{
+display:flex;
+flex-direction:column;
+}

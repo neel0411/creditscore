@@ -1,134 +1,224 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<title>Credit Score Analytics Dashboard</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-<style>
-
-.dashboard-grid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:25px;
-margin-top:20px;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-text-align:center;
-}
-
-.stats{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:20px;
-margin-top:20px;
-}
-
-.stat-box{
-background:#2c7be5;
-color:white;
-padding:20px;
-border-radius:8px;
-font-size:18px;
-text-align:center;
-}
-
-img{
-width:100%;
-border-radius:8px;
-}
-
-</style>
-
+    <title>Credit Score Analytics Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Main background gradient - matching prediction page */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 32px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card .label {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e0e7ff;
+            transition: all 0.3s;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .chart-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .chart-card img {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #f0f4fa;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #667eea;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* MAIN HEADING STYLE FOR DATASET ANALYTICS - EXACTLY LIKE H1 */
+        .section-heading {
+            color: #2c3e50;
+            margin: 30px 0 20px;
+            font-size: 24px;
+            border-bottom: 3px solid #667eea;  /* Same as h1 */
+            padding-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;  /* Full width line */
+        }
+    </style>
 </head>
 
 <body>
-
-<div class="container">
-
-<h1>Credit Score Analytics Dashboard</h1>
-
-<div class="stats">
-
-<div class="stat-box">
-Accuracy<br>
-<b>{{ accuracy }}%</b>
-</div>
-
-<div class="stat-box">
-Model<br>
-<b>Logistic Regression</b>
-</div>
-
-<div class="stat-box">
-Prediction Classes<br>
-<b>Good / Standard / Poor</b>
-</div>
-
-</div>
-
-<br>
-
-<h2>Confusion Matrix</h2>
-
-<div class="card">
-<p>{{ cm }}</p>
-</div>
-
-<h2>Data Visualizations</h2>
-
-<div class="dashboard-grid">
-
-<div class="card">
-<h3>Credit Score Distribution</h3>
-<img src="/static/chart1.png">
-</div>
-
-<div class="card">
-<h3>Income vs Credit Score</h3>
-<img src="/static/chart2.png">
-</div>
-
-<div class="card">
-<h3>Loan Distribution</h3>
-<img src="/static/chart3.png">
-</div>
-
-<div class="card">
-<h3>Outstanding Debt Distribution</h3>
-<img src="/static/chart4.png">
-</div>
-
-<div class="card">
-<h3>Credit Utilization Ratio</h3>
-<img src="/static/chart5.png">
-</div>
-
-<div class="card">
-<h3>Credit Score Pie Chart</h3>
-<img src="/static/chart6.png">
-</div>
-
-<div class="card">
-<h3>Feature Correlation Heatmap</h3>
-<img src="/static/chart7.png">
-</div>
-
-</div>
-
-<br><br>
-
-<a href="/">⬅ Back to Prediction</a>
-
-</div>
-
+    <div class="container">
+        <h1>📊 Credit Score Analytics Dashboard</h1>
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="label">Model Accuracy</div>
+                <div class="value">{{ accuracy }}%</div>
+                <div class="label">Logistic Regression</div>
+            </div>
+            
+            <div class="stat-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                <div class="label">Total Customers</div>
+                <div class="value">{{ total_customers }}</div>
+                <div class="label">In Dataset</div>
+            </div>
+            
+            <div class="stat-card" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                <div class="label">Credit Categories</div>
+                <div class="value">3</div>
+                <div class="label">Good / Standard / Poor</div>
+            </div>
+        </div>
+        
+        <!-- Using class instead of h2 for exact same line as h1 -->
+        <div class="section-heading">📈 Dataset Analytics</div>
+        
+        <!-- Charts Grid - SIRF 5 CHARTS -->
+        <div class="charts-grid">
+            <!-- Chart 1: Credit Score Distribution -->
+            <div class="chart-card">
+                <h3>1. Credit Score Distribution</h3>
+                <img src="/static/chart1.png?{{ range(1,10000)|random }}" alt="Credit Score Distribution">
+                <p style="text-align: center; color: #555; margin-top: 10px;">Good, Standard, Poor counts</p>
+            </div>
+            
+            <!-- Chart 2: Confusion Matrix -->
+            <div class="chart-card">
+                <h3>2. Confusion Matrix</h3>
+                <img src="/static/chart2.png?{{ range(1,10000)|random }}" alt="Confusion Matrix">
+                <p style="text-align: center; color: #555; margin-top: 10px;">Model Performance</p>
+            </div>
+            
+            <!-- Chart 3: Income Distribution -->
+            <div class="chart-card">
+                <h3>3. Income Distribution</h3>
+                <img src="/static/chart3.png?{{ range(1,10000)|random }}" alt="Income Distribution">
+                <p style="text-align: center; color: #555; margin-top: 10px;">Income by category</p>
+            </div>
+            
+            <!-- Chart 4: Loan Distribution -->
+            <div class="chart-card">
+                <h3>4. Loan Distribution</h3>
+                <img src="/static/chart4.png?{{ range(1,10000)|random }}" alt="Loan Distribution">
+                <p style="text-align: center; color: #555; margin-top: 10px;">Number of loans</p>
+            </div>
+            
+            <!-- Chart 5: Outstanding Debt Distribution -->
+            <div class="chart-card" style="grid-column: span 2; max-width: 600px; margin: 0 auto;">
+                <h3>5. Outstanding Debt Distribution</h3>
+                <img src="/static/chart5.png?{{ range(1,10000)|random }}" alt="Outstanding Debt Distribution">
+                <p style="text-align: center; color: #555; margin-top: 10px;">Debt exposure analysis</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/" class="back-link">← Back to Prediction Page</a>
+        </div>
+        
+        <div class="footer">
+            <p>🏦 Credit Score Classification System</p>
+        </div>
+    </div>
 </body>
-
 </html>
