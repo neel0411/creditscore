@@ -1,260 +1,295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>Credit Score Prediction System</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 30px;  /* Padding badhai */
-            min-height: 100vh;
-            display: flex;
-            align-items: center;  /* Vertically center */
-            justify-content: center;
-        }
-        
-        .container {
-            width: 1100px;  /* Width badhai */
-            margin: 20px auto;
-            background: white;
-            padding: 40px;  /* Padding badhai */
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            min-height: 800px;  /* ✅ MINIMUM HEIGHT SET KI */
-        }
-        
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;  /* Margin badhai */
-            font-size: 36px;  /* Font size badhai */
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 15px;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 40px;  /* Margin badhai */
-            font-size: 18px;  /* Font size badhai */
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;  /* Gap badhai */
-            margin: 30px 0;
-        }
-        
-        .input-box {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .input-box label {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 15px;
-            margin-bottom: 8px;
-        }
-        
-        .input-box input {
-            padding: 14px 16px;  /* Padding badhai */
-            border: 2px solid #e0e7ff;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-            background: #f8fafc;
-        }
-        
-        .input-box input:focus {
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            outline: none;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 18px;  /* Padding badhai */
-            font-size: 20px;  /* Font size badhai */
-            font-weight: bold;
-            border-radius: 50px;
-            margin: 40px 0 30px;  /* Margin badhai */
-            border: none;
-            color: white;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .result-box {
-            background: linear-gradient(135deg, #f0f9ff, #e6f0ff);
-            border-left: 8px solid #667eea;
-            padding: 25px;  /* Padding badhai */
-            font-size: 22px;  /* Font size badhai */
-            border-radius: 12px;
-            margin: 30px 0;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .dashboard-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 14px 35px;  /* Padding badhai */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;  /* Font size badhai */
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .dashboard-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        
-        .chart-container {
-            margin: 40px 0;
-            padding: 25px;
-            background: #f8fafc;
-            border-radius: 15px;
-            text-align: center;
-        }
-        
-        .chart-container h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        
-        .chart-container img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .reset-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: #667eea;
-            font-size: 15px;
-            text-decoration: none;
-        }
-        
-        .reset-link:hover {
-            text-decoration: underline;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #667eea;
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
-</head>
+  <head>
+    <title>Credit Score Prediction</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
 
-<body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(-45deg, #667eea, #764ba2, #6dd5fa, #c2e9fb);
+        background-size: 400% 400%;
+        animation: gradientMove 12s ease infinite;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .container {
+        width: 1200px;
+        padding: 50px;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #eee;
+        margin-bottom: 40px;
+        font-size: 16px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+      }
+
+      .input-box {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-box label {
+        color: #fff;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+
+      .input-box input {
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+        transition: 0.3s;
+      }
+
+      .input-box input:focus {
+        box-shadow: 0 0 12px rgba(102, 126, 234, 0.6);
+      }
+
+      .input-box input:hover {
+        transform: scale(1.02);
+      }
+
+      button {
+        margin-top: 30px;
+        width: 100%;
+        padding: 16px;
+        border-radius: 50px;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 114, 255, 0.5);
+      }
+
+      .result-box {
+        margin-top: 30px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+
+      .chart-container {
+        margin-top: 40px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .chart-container img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .actions {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .btn-link {
+        display: inline-block;
+        margin: 10px;
+        padding: 12px 25px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .btn-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #eee;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
     <div class="container">
-        <h1>🏦 Credit Score Prediction System</h1>
-        <div class="subtitle">Enter your financial details to check your credit score</div>
-        
-        <form method="POST">
-            <div class="form-grid">
-                <div class="input-box">
-                    <label>👤 Age</label>
-                    <input type="number" name="age" value="{{ form_data.get('age', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>💰 Annual Income (₹)</label>
-                    <input type="number" name="income" value="{{ form_data.get('income', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>🏦 Bank Accounts</label>
-                    <input type="number" name="bank" value="{{ form_data.get('bank', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>💳 Credit Cards</label>
-                    <input type="number" name="card" value="{{ form_data.get('card', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>📈 Interest Rate (%)</label>
-                    <input type="number" step="0.1" name="interest" value="{{ form_data.get('interest', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>📊 Number of Loans</label>
-                    <input type="number" name="loan" value="{{ form_data.get('loan', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>⏰ Delay (days)</label>
-                    <input type="number" name="delay" value="{{ form_data.get('delay', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>💸 Outstanding Debt (₹)</label>
-                    <input type="number" name="debt" value="{{ form_data.get('debt', '') }}" required>
-                </div>
-                
-                <div class="input-box">
-                    <label>⚖️ Credit Utilization</label>
-                    <input type="number" step="0.01" name="util" value="{{ form_data.get('util', '') }}" required>
-                </div>
-            </div>
-            
-            <button type="submit">🔮 Predict Credit Score</button>
-        </form>
-        
-        {% if prediction %}
-        <div class="result-box">
-            {{ prediction }}
+      <h1>🏦 Credit Score Prediction</h1>
+      <div class="subtitle">
+        Enter your financial details to predict your credit score
+      </div>
+
+      <form method="POST">
+        <div class="form-grid">
+          <div class="input-box">
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              value="{{ form_data.get('age', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Annual Income (₹)</label>
+            <input
+              type="number"
+              name="income"
+              value="{{ form_data.get('income', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Bank Accounts</label>
+            <input
+              type="number"
+              name="bank"
+              value="{{ form_data.get('bank', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Credit Cards</label>
+            <input
+              type="number"
+              name="card"
+              value="{{ form_data.get('card', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Interest Rate (%)</label>
+            <input
+              type="number"
+              step="0.1"
+              name="interest"
+              value="{{ form_data.get('interest', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Number of Loans</label>
+            <input
+              type="number"
+              name="loan"
+              value="{{ form_data.get('loan', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Delay (Days)</label>
+            <input
+              type="number"
+              name="delay"
+              value="{{ form_data.get('delay', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Outstanding Debt (₹)</label>
+            <input
+              type="number"
+              name="debt"
+              value="{{ form_data.get('debt', '') }}"
+              required
+            />
+          </div>
+
+          <div class="input-box">
+            <label>Credit Utilization</label>
+            <input
+              type="number"
+              step="0.01"
+              name="util"
+              value="{{ form_data.get('util', '') }}"
+              required
+            />
+          </div>
         </div>
-        {% endif %}
-        
-        {% if chart_exists %}
-        <div class="chart-container">
-            <h2>📊 Prediction Probability Analysis</h2>
-            <img src="/static/dynamic_chart.png?{{ range(1, 10000) | random }}" alt="Prediction Chart">
-        </div>
-        {% endif %}
-        
-        <div style="text-align: center;">
-            <a href="/dashboard" class="dashboard-link">📈 View Analytics Dashboard</a>
-        </div>
-        
-        {% if chart_exists %}
-        <div style="text-align: center; margin-top: 15px;">
-            <a href="/clear" class="reset-link">↺ New Prediction</a>
-        </div>
-        {% endif %}
-        
-        <div class="footer">
-            <p>🏦 Credit Score Classification System</p>
-        </div>
+
+        <button type="submit">🔮 Predict Credit Score</button>
+      </form>
+
+      {% if prediction %}
+      <div class="result-box">{{ prediction }}</div>
+      {% endif %} {% if chart_exists %}
+      <div class="chart-container">
+        <h3>Prediction Probability</h3>
+        <img src="/static/dynamic_chart.png?{{ range(1,10000)|random }}" />
+      </div>
+      {% endif %}
+
+      <div class="actions">
+        <a href="/dashboard" class="btn-link">📊 View Dashboard</a>
+        <a href="/clear" class="btn-link">🔄 Reset</a>
+      </div>
+
+      <div class="footer">Credit Score ML System • Flask + Scikit-learn</div>
     </div>
-</body>
+  </body>
 </html>
